@@ -1,3 +1,7 @@
+locals {
+  autoscaling = (var.node_count == null) ? [1] : []
+}
+
 resource "google_container_node_pool" "default" {
   provider = "google-beta"
 
@@ -11,7 +15,7 @@ resource "google_container_node_pool" "default" {
   node_count = var.node_count
 
   dynamic "autoscaling" {
-    for_each = var.node_count == null ? [] : [1]
+    for_each = local.autoscaling
     content {
       min_node_count = var.autoscaling_minimum
       max_node_count = var.autoscaling_maximum
