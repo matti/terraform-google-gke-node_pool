@@ -37,5 +37,6 @@ variable "oauth_scopes" {
     "storage-ro",
     "logging-write", # if stackdriver
     "monitoring",    # if google monitoring
+    "compute-rw",    # managedcertificates
   ]
 }
