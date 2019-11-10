@@ -1,6 +1,14 @@
 variable "cluster" {}
 
+variable "name" {
+  default = null
+}
+
 variable "node_count" {
+  default = null
+}
+
+variable "node_locations" {
   default = null
 }
 
@@ -15,9 +23,11 @@ variable "autoscaling_maximum" {
 variable "machine_type" {}
 variable "disk_size_gb" {}
 variable "disk_type" {}
+
 variable "preemptible" {
   default = false
 }
+
 variable "labels" {
   default = {}
 }

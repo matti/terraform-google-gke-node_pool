@@ -2,17 +2,19 @@ locals {
   autoscaling = (var.node_count == null) ? [1] : []
 }
 
+resource "random_string" "random" {
+  length  = 4
+  upper   = false
+  special = false
+}
+
 resource "google_container_node_pool" "default" {
   provider = "google-beta"
 
-  lifecycle {
-    create_before_destroy = true
-  }
-
   cluster  = var.cluster.name
   location = var.cluster.location
-
-  node_count = var.node_count
+  // zone
+  // region
 
   dynamic "autoscaling" {
     for_each = local.autoscaling
@@ -21,6 +23,16 @@ resource "google_container_node_pool" "default" {
       max_node_count = var.autoscaling_maximum
     }
   }
+  // initial_node_count
+  management {
+    auto_repair  = var.auto_repair
+    auto_upgrade = var.auto_upgrade
+  }
+
+  // max_pods_per_node
+  node_locations = var.node_locations == null ? null : split(var.node_locations, ",")
+
+  name = var.name == null ? null : "${var.name}-${random_string.random.result}"
 
   node_config {
     machine_type = var.machine_type
@@ -46,9 +58,12 @@ resource "google_container_node_pool" "default" {
       }
     }
   }
+  node_count = var.node_count
+  // project
+  // version
 
-  management {
-    auto_upgrade = var.auto_upgrade
-    auto_repair  = var.auto_repair
+  lifecycle {
+    create_before_destroy = true
   }
+
 }
