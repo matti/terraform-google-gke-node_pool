@@ -1,3 +1,11 @@
+variable "create_before_destroy" {
+  default = true
+}
+
+variable "enabled" {
+  default = true
+}
+
 variable "cluster" {}
 
 variable "name" {
@@ -5,6 +13,10 @@ variable "name" {
 }
 
 variable "node_count" {
+  default = null
+}
+
+variable "initial_node_count" {
   default = null
 }
 
