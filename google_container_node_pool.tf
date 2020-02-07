@@ -56,6 +56,7 @@ resource "google_container_node_pool" "default" {
     ]
   }
 
+  count    = var.amount
   cluster  = var.cluster.name
   location = var.cluster.location
 

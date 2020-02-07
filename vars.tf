@@ -1,3 +1,6 @@
+variable "amount" {
+  default = 1
+}
 
 variable "cluster" {}
 
